@@ -1,3 +1,6 @@
+/**
+ * 线性回归
+ */
 const tf = require('@tensorflow/tfjs-node-gpu')
 
 const xs = [1, 2, 3, 4, 5]
@@ -26,12 +29,18 @@ model.compile({
 
 model.summary()
 
+const EPOCHS = 2000
+
 model.fit(xs_tensor, ys_tensor, {
-    epochs: 2000,
+    epochs: EPOCHS,
     callbacks: {
         onBatchEnd: async (epoch, logs) => {
             console.log('k =', model.layers[0].getWeights()[0].dataSync()[0])
             console.log('b =', model.layers[0].getWeights()[1].dataSync()[0])
         }
     }
+}).then(() => {
+    const x = 6
+    console.log(`预测结果: x = ${x}`)
+    model.predict(tf.tensor2d([[x]])).print()
 })
