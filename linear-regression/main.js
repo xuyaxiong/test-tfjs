@@ -18,6 +18,7 @@ const LEARNING_RATE = 0.01
 // 模型
 const model = tf.sequential()
 model.add(tf.layers.dense({ inputShape: [1], units: 1 }))
+model.summary()
 
 // 优化器
 const optimizer = tf.train.sgd(LEARNING_RATE)
@@ -27,7 +28,6 @@ model.compile({
     optimizer: optimizer
 })
 
-model.summary()
 
 const EPOCHS = 2000
 
